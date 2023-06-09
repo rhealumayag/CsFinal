@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto my-2 my-lg-0">
+         
+          <li class="nav-item"><a class="nav-link" href="cshomepage.html">Activity</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          
+      </ul>
+  </div>
+<html>
+<head>
+	<title>Friend Registry</title>
+	<style>
+		body {
+            background-color: #F5F5F5;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+            color: #2F4F4F;
+            margin-top: 40px;
+        }
+        form {
+            background-color: pink;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 10px 10px 10px #888888;
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+            color: #2F4F4F;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], select {
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            box-shadow: 0px 0px 5px #888888;
+        }
+        input[type="submit"] {
+            background-color: blue;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: gray;
+        }
+	</style>
+</head>
+<body>
+	<h1>Friend Registry</h1>
+	<form>
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name" required>
+
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email" required>
+
+		<label for="phone">Phone:</label>
+		<input type="tel" id="phone" name="phone" required>
+
+		<label for="birthday">Birthday:</label>
+		<input type="date" id="birthday" name="birthday" required>
+
+		<label for="address">Address:</label>
+		<textarea id="address" name="address" required></textarea>
+
+		<label for="favoritecolor">Favorite color:</label>
+        <select id="favoritecolor" name="favoritecolor" required>
+            <option value="">Select a color</option>
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+			 <option value="yellow">Yellow</option>
+            <option value="purple">Purple</option>
+        </select>
+
+		<input type="submit" value="Submit" id="sub">
+			</div>
+			<center><h1 id="msg"></h1></center>
+	</form>
+	<script>
+        let form = document.querySelector("form");
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            document.querySelector("#sub").value = "Submitting..";
+            let data = new FormData(form);
+            // Encode home address value
+            const homeAddress = document.querySelector("#address").value;
+            data.set("homeaddress", encodeURIComponent(homeAddress));
+            fetch('https://script.google.com/macros/s/AKfycbz9C1CnyWD6BYsduLpsOPmB4Ri7dcFrZ7hRSUXG-xuoikZ72rCkEAfHMa7abqE77Uz4Nw/exec', {
+                    method: 'POST',
+                    body: data
+                })
+                .then(res => res.text())
+                .then(data => {
+                    document.querySelector("#msg").innerHTML = data;
+                    document.querySelector("#sub").value = "Submit";
+                    // Hide the success message after 3 seconds
+                    setTimeout(() => {
+                        document.querySelector("#msg").innerHTML = "";
+                    }, 3000);
+                });
+        })
+    </script>
+</body>
+</html>
